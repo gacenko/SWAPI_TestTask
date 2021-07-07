@@ -9,7 +9,7 @@ The project for retreiving data from SWAPI GraphQL API
 * Status
 
 ### General Info
-The project aim is to guery SWAPI GraphQL API and retreive the next data:
+The project aim is to query SWAPI GraphQL API and retreive the next data:
 - all species participated in 1st movie of Star Wars
 - data for person with "Droid" specie
 - totalCount and data for all persons from 1st movie
