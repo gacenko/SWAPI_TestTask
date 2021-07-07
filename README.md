@@ -3,7 +3,7 @@
 The project for retreiving data from SWAPI GraphQL API
 
 ## Table of Contents
-* General info(
+* General info
 * Technologies
 * Setup and Usage
 * Status
