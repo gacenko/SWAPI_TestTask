@@ -1,0 +1,34 @@
+{
+	"id": "13bf00c9-f529-4274-85b7-0fad0df6532c",
+	"name": "OpenTag TestTask",
+	"values": [
+		{
+			"key": "url",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "specieList",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "DroidId",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "totalCount",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "characterID",
+			"value": "",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2021-07-07T21:08:28.300Z",
+	"_postman_exported_using": "Postman/7.36.5"
+}
