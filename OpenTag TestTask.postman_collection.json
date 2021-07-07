@@ -1,0 +1,166 @@
+{
+	"info": {
+		"_postman_id": "4010181a-df65-4826-a210-ea5374a524d3",
+		"name": "OpenTag TestTask",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Query - all species from 1st episode",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//parse json from response",
+							"const jsonData = pm.response.json();",
+							"",
+							"//set species array as variable ",
+							"const allSpecies = jsonData.data.film.speciesConnection.species;",
+							"",
+							"//inialize species as an empty array",
+							"let species = []",
+							"",
+							"//iterate over species array and append every element name to the new array",
+							"for (var i=0;i<allSpecies.length;i++){",
+							"    let specie = allSpecies[i].name;",
+							"    let specieList = species.push(specie);",
+							"",
+							"    //save id for the Droid person as env variable for the future request",
+							"    if (specie == \"Droid\") {",
+							"        pm.environment.set('DroidId', allSpecies[i].id);",
+							"    }",
+							"}",
+							"//set the array with all species as postman env variable",
+							"pm.environment.set('specieList', species);",
+							"",
+							"//set characters array as variable ",
+							"const allCharacters = jsonData.data.film.characterConnection.characters;",
+							"",
+							"//iterate over characters array and when character with id=4 is found set this encoded id as env variable",
+							"for (var i=0;i<allCharacters.length;i++){",
+							"    let characterID = allCharacters[i].id;",
+							"    if (atob(characterID) === \"people:4\" ){",
+							"        pm.environment.set('characterID', characterID);",
+							"    }",
+							"}",
+							"",
+							"//set the count of people participated in the movie as env variable",
+							"pm.environment.set('totalCount', jsonData.data.film.characterConnection.totalCount);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query searchForAllSpeciesFromEpisode {\n        film (filmID:1){\n            title\n            episodeID\n            speciesConnection {\n                species{\n                    name\n                    id\n                }\n            }\n            characterConnection {\n                totalCount\n                characters {\n                    name\n                    gender\n                    id\n                }\n            }\n        }\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "{{url}}",
+					"host": [
+						"{{url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query - obtain info about Droid person",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query searchInfoForADroidPerson ($PersonID:ID) {\n        person (id:$PersonID){\n            name\n            birthYear\n            homeworld {\n                name\n            }\n            eyeColor\n        }\n}",
+						"variables": "{\n   \"PersonID\":\"{{DroidId}}\"\n}"
+					}
+				},
+				"url": {
+					"raw": "{{url}}",
+					"host": [
+						"{{url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query - obtain info about person id 4",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query searchInfoForADroidPerson ($PersonID:ID) {\n        person (id:$PersonID){\n            name\n            birthYear\n            homeworld {\n                name\n            }\n            eyeColor\n            starshipConnection {\n                starships {\n                    name\n                }\n            }\n        }\n}",
+						"variables": "{\n   \"PersonID\":\"{{characterID}}\"\n}"
+					}
+				},
+				"url": {
+					"raw": "{{url}}",
+					"host": [
+						"{{url}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
